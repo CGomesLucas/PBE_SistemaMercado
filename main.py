@@ -1,3 +1,5 @@
+from collections import Counter
+
 usuario = "admin"
 senha = 1234
 tentativas = 0
@@ -102,13 +104,9 @@ while True:
         qtd = int(input("Insira a quantidade do produto que deseja vender: "))
 
         indice = listagem_produtos["Código"].index(codigo)
-        print(indice)
         valor_estoque = listagem_produtos["Estoque"][indice]
-        print(valor_estoque)
         valor_preco = listagem_produtos["Preço"][indice]
-        print(valor_preco)
         valor_produto = listagem_produtos["Nome"][indice]
-        print(valor_produto)
 
         if qtd > valor_estoque:
             print("Estoque insuficiente! Insira um quantidade válida!")
@@ -126,6 +124,38 @@ while True:
         historico_valor.append(valor_total)
 
     if opcao == 5:
+        print("1 - Total Vendido")
+        print("2 - Produto Mais vendido")
+        print("3 - Produto com maior estoque")
+        print("4 - Listar Vendas")
+
+        opcao = int(input("Insira uma das opções do menu: "))
+
+        if opcao == 1:
+            print("Total Vendido: ", sum(historico_qtd))
+
+        if opcao == 2:
+            if historico_produto:
+                contagem = Counter(historico_produto)
+                mais_frequente = contagem.most_common(1)[0][0]
+                print("Produto mais Vendido: ", mais_frequente)
+            else:
+                print("Nenhuma venda foi registrada")
+
+        if opcao == 3:
+            maior_valor_estoque = max(listagem_produtos["Estoque"])
+            indice_vendas = listagem_produtos["Estoque"].index(maior_valor_estoque)
+            nome_maior_estoque = listagem_produtos["Nome"][indice_vendas]
+            print(f"Produto com maior estoque: {nome_maior_estoque} ({maior_valor_estoque} unidades)")
+
+        if opcao == 4:
+            listagem_de_vendas = {
+                "Produto": historico_produto,
+                "Qtd": historico_qtd,
+                "Valor": historico_valor
+            }
+            print("Listagem de vendas", listagem_de_vendas)
+            print()
 
     if opcao == 6:
         print()
