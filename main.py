@@ -24,7 +24,10 @@ while tentativas < 3:
 
     tentativas += 1
 
-    print("Você atingiu o máximo de 3 tentativas! Tente novamente!")
+print("Você atingiu o máximo de 3 tentativas! Tente novamente!")
+
+
+
 
 while True:
     print("1 - Cadastrar produto")
@@ -86,25 +89,36 @@ while True:
                 valor = listagem_produtos["Estoque"][indice]
                 estoque_add = valor + estoque
                 listagem_produtos["Estoque"].insert(indice, estoque_add)
-                listagem_produtos["Nome"].pop(indice + 1)
+                listagem_produtos["Estoque"].pop(indice + 1)
+                print(indice)
 
     if opcao == 4:
         codigo = int(input("Insira o código do produto para venda: "))
-        qtd = int(input("Insira a quantidade do produto que deseja vender: "))
 
         if codigo not in listagem_produtos["Código"]:
-            print("Produto não existe! Insira um código válido!")
+            print("Produto não existe!")
             continue
+
+        qtd = int(input("Insira a quantidade do produto que deseja vender: "))
+
         indice = listagem_produtos["Código"].index(codigo)
+        print(indice)
         valor_estoque = listagem_produtos["Estoque"][indice]
+        print(valor_estoque)
         valor_preco = listagem_produtos["Preço"][indice]
+        print(valor_preco)
         valor_produto = listagem_produtos["Nome"][indice]
+        print(valor_produto)
 
         if qtd > valor_estoque:
             print("Estoque insuficiente! Insira um quantidade válida!")
             continue
 
-        valor_estoque -= qtd
+        total_estoque = valor_estoque - qtd
+
+        listagem_produtos["Estoque"].insert(indice, total_estoque)
+        listagem_produtos["Estoque"].pop(indice + 1)
+
         valor_total = qtd*valor_preco
 
         historico_produto.append(valor_produto)
@@ -112,12 +126,14 @@ while True:
         historico_valor.append(valor_total)
 
     if opcao == 5:
-        print("Em processamento...")
+
     if opcao == 6:
+        print()
         print("Resumo do Sistema: ")
-        print("O total de produtos cadastrados no sistema é:", len(listagem_produtos["Produto"]))
+        print("O total de produtos cadastrados no sistema é:", len(listagem_produtos["Nome"]))
         print("O total de vendas realizadas é:", len(historico_produto))
         print("O valor total vendido é:", sum(historico_produto))
+        break
 
 
 
