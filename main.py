@@ -16,20 +16,25 @@ historico_produto = []
 historico_qtd = []
 historico_valor = []
 
-while tentativas < 3:
+while True:
+
     usuario1 = str(input("Digite o usuário para entrar: "))
-    senha1 = int(input("Digite a senha para entrar: "))
 
-    if usuario1 == usuario and senha1 == senha:
-        print("Login realizado com sucesso\n")
-        break
+    try:
+        senha1 = int(input("Digite a senha para entrar: "))
 
-    tentativas += 1
+        if usuario1 == usuario and senha1 == senha:
+            print("Login realizado com sucesso\n")
+            break
 
-print("Você atingiu o máximo de 3 tentativas! Tente novamente!")
+        tentativas += 1
 
-
-
+        if tentativas == 3:
+            print("Você atingiu o máximo de 3 tentativas! Tente novamente!")
+            continue
+    except:
+        print("A senha deve ser númerica!")
+        tentativas += 1
 
 while True:
     print("1 - Cadastrar produto")
